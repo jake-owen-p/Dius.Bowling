@@ -6,7 +6,11 @@ const rollFullGame = (bowlingGame: BowlingGame, score: number) => {
         bowlingGame.roll(score);
     }
 }
-
+const rollSelection = (bowlingGame: BowlingGame, rolls: number[]) => {
+    for (const roll of rolls) {
+        bowlingGame.roll(roll);
+    }
+}
 describe('GIVEN a bowling game with a valid set of rolls', () => {
     let bowlingGame: BowlingGame;
     beforeEach(() => {
@@ -37,18 +41,14 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
         describe('AND there are four rolls [4,6,5,0] AND the first frame is a spare', () => {
             it('THEN the score is 20', () => {
                 const rolls = [4,6,5,0];
-                for (const roll of rolls) {
-                    bowlingGame.roll(roll);
-                }
+                rollSelection(bowlingGame, rolls);
                 expect(bowlingGame.score()).toEqual(20);
             })
         })
         describe('AND there are four rolls [4,6,5,5,5,4] AND the first two frames are spares', () => {
-            it('THEN the score is 20', () => {
+            it('THEN the score is 39', () => {
                 const rolls = [4,6,5,5,5,4];
-                for (const roll of rolls) {
-                    bowlingGame.roll(roll);
-                }
+                rollSelection(bowlingGame, rolls);
                 expect(bowlingGame.score()).toEqual(39);
             })
         })
