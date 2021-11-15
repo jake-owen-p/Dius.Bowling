@@ -46,7 +46,6 @@ export class BowlingGame {
     }
 
     getFrameScore() {
-        const isStrike = this.frames[this.currentIndex][0] === MAX_BOWL;
-        return isStrike ? MAX_BOWL : this.frames[this.currentIndex][0] + this.frames[this.currentIndex][1];
+        return this.frames[this.currentIndex].reduce((sum, x) => sum + x);
     }
 }
