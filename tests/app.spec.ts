@@ -53,4 +53,13 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             })
         })
     })
+    describe('WHEN considering only a strike', () => {
+        describe('AND there are three rolls [10,5,4] AND the first frame is a strike', () => {
+            it('THEN the score is 28', () => {
+                const rolls = [10,5,4];
+                rollSelection(bowlingGame, rolls);
+                expect(bowlingGame.score()).toEqual(28);
+            })
+        })
+    })
 })

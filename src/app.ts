@@ -14,15 +14,38 @@ export class BowlingGame {
 
     score() {
         for (let i = 0; i<this.frames.length; i++) {
-            const totalFrameScore = this.frames[i][0] + this.frames[i][1];
-            const isSpare = totalFrameScore === MAX_BOWL;
-            if (isSpare) {
-                const nextRoll = this.frames[i+1][0];
-                this.totalScore += totalFrameScore + nextRoll;
+            const totalFrameScore = this.getFrameScore(i);
+            if (this.isStrike(i)) {
+                this.totalScore += totalFrameScore + this.getStrikeBonus(i);
+            } else if (this.isSpare(i)) {
+                this.totalScore += totalFrameScore + this.getSpareBonus(i);
             } else {
                 this.totalScore += totalFrameScore;
             }
         }
         return this.totalScore;
+    }
+
+    isStrike(index: number) {
+        return this.frames[index][0] === MAX_BOWL;
+    }
+
+    isSpare(index: number) {
+        return this.frames[index][0] + this.frames[index][1] === MAX_BOWL
+    }
+
+    getStrikeBonus(index: number) {
+        const firstBonusRoll = this.frames[index + 1][0];
+        const secondBonusRoll = this.isStrike(index + 1) ? this.frames[index + 2][0] : this.frames[index + 1][1];
+        return firstBonusRoll + secondBonusRoll;
+    }
+
+    getSpareBonus(index: number) {
+        return this.frames[index + 1][0];
+    }
+
+    getFrameScore(index: number) {
+        const isStrike = this.frames[index][0] === MAX_BOWL;
+        return isStrike ? MAX_BOWL : this.frames[index][0] + this.frames[index][1];
     }
 }
