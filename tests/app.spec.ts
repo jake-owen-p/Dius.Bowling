@@ -29,7 +29,7 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             })
         })
         describe('AND all rolls are 4', () => {
-            it('THEN the score is 8', () => {
+            it('THEN the score is 80', () => {
                 rollSome(4, 20);
                 expect(bowlingGame.score()).toEqual(80);
             })
@@ -53,7 +53,7 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             })
         })
         describe('AND the game is all spares', () => {
-            it('THEN the score is 300', () => {
+            it('THEN the score is 150', () => {
                 const rolls = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5];
                 rollSelection(rolls);
                 expect(bowlingGame.score()).toEqual(150);
