@@ -28,12 +28,10 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
                 expect(bowlingGame.score()).toEqual(20);
             })
         })
-        describe('AND there are two rolls [4,4]', () => {
+        describe('AND all rolls are 4', () => {
             it('THEN the score is 8', () => {
-                bowlingGame.roll(4);
-                bowlingGame.roll(4);
-                rollSome(0, 18);
-                expect(bowlingGame.score()).toEqual(8);
+                rollSome(4, 20);
+                expect(bowlingGame.score()).toEqual(80);
             })
         })
     })
