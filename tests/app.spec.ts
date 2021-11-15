@@ -12,41 +12,45 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
     beforeEach(() => {
         bowlingGame = new BowlingGame();
     })
-    describe('WHEN all rolls are 0', () => {
-        it('THEN the score is 0', () => {
-            rollFullGame(bowlingGame, 0);
-            expect(bowlingGame.score()).toEqual(0);
+    describe('WHEN all roles are the same', () => {
+        describe('AND all rolls are 0', () => {
+            it('THEN the score is 0', () => {
+                rollFullGame(bowlingGame, 0);
+                expect(bowlingGame.score()).toEqual(0);
+            })
+        })
+        describe('AND all rolls are 1', () => {
+            it('THEN the score is 20', () => {
+                rollFullGame(bowlingGame, 1);
+                expect(bowlingGame.score()).toEqual(20);
+            })
+        })
+        describe('AND there are two rolls [4,4]', () => {
+            it('THEN the score is 8', () => {
+                bowlingGame.roll(4);
+                bowlingGame.roll(4);
+                expect(bowlingGame.score()).toEqual(8);
+            })
         })
     })
-    describe('WHEN all rolls are 1', () => {
-        it('THEN the score is 20', () => {
-            rollFullGame(bowlingGame, 1);
-            expect(bowlingGame.score()).toEqual(20);
+    describe('WHEN considering only a spare', () => {
+        describe('AND there are four rolls [4,6,5,0] AND the first frame is a spare', () => {
+            it('THEN the score is 20', () => {
+                const rolls = [4,6,5,0];
+                for (const roll of rolls) {
+                    bowlingGame.roll(roll);
+                }
+                expect(bowlingGame.score()).toEqual(20);
+            })
         })
-    })
-    describe('WHEN there are two rolls [4,4]', () => {
-        it('THEN the score is 8', () => {
-            bowlingGame.roll(4);
-            bowlingGame.roll(4);
-            expect(bowlingGame.score()).toEqual(8);
-        })
-    })
-    describe('WHEN there are four rolls [4,6,5,0] AND the first two count as a spare', () => {
-        it('THEN the score is 20', () => {
-            const rolls = [4,6,5,0];
-            for (const roll of rolls) {
-                bowlingGame.roll(roll);
-            }
-            expect(bowlingGame.score()).toEqual(20);
-        })
-    })
-    describe('WHEN there are four rolls [4,6,5,5,5,4] AND the first two count as a spare', () => {
-        it('THEN the score is 20', () => {
-            const rolls = [4,6,5,5,5,4];
-            for (const roll of rolls) {
-                bowlingGame.roll(roll);
-            }
-            expect(bowlingGame.score()).toEqual(39);
+        describe('AND there are four rolls [4,6,5,5,5,4] AND the first two frames are spares', () => {
+            it('THEN the score is 20', () => {
+                const rolls = [4,6,5,5,5,4];
+                for (const roll of rolls) {
+                    bowlingGame.roll(roll);
+                }
+                expect(bowlingGame.score()).toEqual(39);
+            })
         })
     })
 })
