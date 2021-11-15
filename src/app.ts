@@ -3,6 +3,7 @@ const MAX_BOWL = 10;
 export class BowlingGame {
     private totalScore = 0;
     private frames: number[][] = [[]];
+    private currentIndex = 0;
 
     roll(score: number) {
         const latestFrame = this.frames[this.frames.length-1];
@@ -13,12 +14,12 @@ export class BowlingGame {
     }
 
     score() {
-        for (let i = 0; i<this.frames.length; i++) {
-            const totalFrameScore = this.getFrameScore(i);
-            if (this.isStrike(i)) {
-                this.totalScore += totalFrameScore + this.getStrikeBonus(i);
-            } else if (this.isSpare(i)) {
-                this.totalScore += totalFrameScore + this.getSpareBonus(i);
+        for (this.currentIndex; this.currentIndex < 10; this.currentIndex++) {
+            const totalFrameScore = this.getFrameScore();
+            if (this.isStrike()) {
+                this.totalScore += totalFrameScore + this.getStrikeBonus();
+            } else if (this.isSpare()) {
+                this.totalScore += totalFrameScore + this.getSpareBonus();
             } else {
                 this.totalScore += totalFrameScore;
             }
@@ -26,26 +27,26 @@ export class BowlingGame {
         return this.totalScore;
     }
 
-    isStrike(index: number) {
-        return this.frames[index][0] === MAX_BOWL;
+    isStrike() {
+        return this.frames[this.currentIndex][0] === MAX_BOWL;
     }
 
-    isSpare(index: number) {
-        return this.frames[index][0] + this.frames[index][1] === MAX_BOWL
+    isSpare() {
+        return this.frames[this.currentIndex][0] + this.frames[this.currentIndex][1] === MAX_BOWL
     }
 
-    getStrikeBonus(index: number) {
-        const firstBonusRoll = this.frames[index + 1][0];
-        const secondBonusRoll = this.isStrike(index + 1) ? this.frames[index + 2][0] : this.frames[index + 1][1];
+    getStrikeBonus() {
+        const firstBonusRoll = this.frames[this.currentIndex + 1][0];
+        const secondBonusRoll = firstBonusRoll === MAX_BOWL ? this.frames[this.currentIndex + 2][0] : this.frames[this.currentIndex + 1][1];
         return firstBonusRoll + secondBonusRoll;
     }
 
-    getSpareBonus(index: number) {
-        return this.frames[index + 1][0];
+    getSpareBonus() {
+        return this.frames[this.currentIndex + 1][0];
     }
 
-    getFrameScore(index: number) {
-        const isStrike = this.frames[index][0] === MAX_BOWL;
-        return isStrike ? MAX_BOWL : this.frames[index][0] + this.frames[index][1];
+    getFrameScore() {
+        const isStrike = this.frames[this.currentIndex][0] === MAX_BOWL;
+        return isStrike ? MAX_BOWL : this.frames[this.currentIndex][0] + this.frames[this.currentIndex][1];
     }
 }

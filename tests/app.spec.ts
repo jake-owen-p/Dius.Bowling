@@ -1,8 +1,7 @@
 import {BowlingGame} from "../src/app";
 
-const MAX_ROLLS = 20;
-const rollFullGame = (bowlingGame: BowlingGame, score: number) => {
-    for (let i = 0; i<MAX_ROLLS; i++) {
+const rollSome = (bowlingGame: BowlingGame, score: number, rolls: number) => {
+    for (let i = 0; i<rolls; i++) {
         bowlingGame.roll(score);
     }
 }
@@ -19,13 +18,13 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
     describe('WHEN all roles are the same', () => {
         describe('AND all rolls are 0', () => {
             it('THEN the score is 0', () => {
-                rollFullGame(bowlingGame, 0);
+                rollSome(bowlingGame, 0, 20);
                 expect(bowlingGame.score()).toEqual(0);
             })
         })
         describe('AND all rolls are 1', () => {
             it('THEN the score is 20', () => {
-                rollFullGame(bowlingGame, 1);
+                rollSome(bowlingGame, 1, 20);
                 expect(bowlingGame.score()).toEqual(20);
             })
         })
@@ -33,6 +32,7 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             it('THEN the score is 8', () => {
                 bowlingGame.roll(4);
                 bowlingGame.roll(4);
+                rollSome(bowlingGame, 0, 18);
                 expect(bowlingGame.score()).toEqual(8);
             })
         })
@@ -42,6 +42,7 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             it('THEN the score is 20', () => {
                 const rolls = [4,6,5,0];
                 rollSelection(bowlingGame, rolls);
+                rollSome(bowlingGame, 0, 16);
                 expect(bowlingGame.score()).toEqual(20);
             })
         })
@@ -49,6 +50,7 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             it('THEN the score is 39', () => {
                 const rolls = [4,6,5,5,5,4];
                 rollSelection(bowlingGame, rolls);
+                rollSome(bowlingGame, 0, 14);
                 expect(bowlingGame.score()).toEqual(39);
             })
         })
@@ -58,7 +60,15 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
             it('THEN the score is 28', () => {
                 const rolls = [10,5,4];
                 rollSelection(bowlingGame, rolls);
+                rollSome(bowlingGame, 0, 16);
                 expect(bowlingGame.score()).toEqual(28);
+            })
+        })
+        describe('AND the game is all strikes', () => {
+            it('THEN the score is 28', () => {
+                const rolls = [10,10,10,10,10,10,10,10,10,10,10,10];
+                rollSelection(bowlingGame, rolls);
+                expect(bowlingGame.score()).toEqual(300);
             })
         })
     })
