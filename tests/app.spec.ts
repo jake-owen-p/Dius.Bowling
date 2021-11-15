@@ -92,5 +92,12 @@ describe('GIVEN a bowling game with a valid set of rolls', () => {
                 expect(bowlingGame.score()).toEqual(166);
             })
         })
+        describe('AND the rolls are [8,2,4,5,4,6,10,10,7,3,3,3,2,5,7,3,10,10,10]', () => {
+            it('THEN the score is 145', () => {
+                const rolls = [8,2,5,4,5,5,4,6,6,4,6,4,7,3,6,4,6,2,9,1,8];
+                rollSelection(rolls);
+                expect(bowlingGame.score()).toEqual(145);
+            })
+        })
     })
 })

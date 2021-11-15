@@ -1,4 +1,5 @@
 const MAX_BOWL = 10;
+const NO_OF_FRAMES = 10;
 
 export class BowlingGame {
     private totalScore = 0;
@@ -14,7 +15,7 @@ export class BowlingGame {
     }
 
     score() {
-        for (this.currentIndex; this.currentIndex < 10; this.currentIndex++) {
+        for (this.currentIndex; this.currentIndex < NO_OF_FRAMES; this.currentIndex++) {
             const totalFrameScore = this.getFrameScore();
             if (this.isStrike()) {
                 this.totalScore += totalFrameScore + this.getStrikeBonus();
